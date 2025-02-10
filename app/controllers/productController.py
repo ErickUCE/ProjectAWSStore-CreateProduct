@@ -1,27 +1,25 @@
-from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 from app.models import Product
-from app.schemas import ProductCreate
-from app.database import SessionLocal
 from app.utils import validar_proveedor
-
-# Función para obtener la sesión de la base de datos
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+from app.schemas import ProductCreate
 
 def create_product(product: ProductCreate, db: Session):
-    """ Función para crear un producto con validación de proveedor """
+    """Crea un nuevo producto con el nombre del proveedor en lugar del ID."""
     
-    # 🔍 Validar si el proveedor existe antes de insertar el producto
-    validar_proveedor(product.proveedor_id)
+    # 🔹 Obtener el nombre del proveedor usando el ID
+    nombre_proveedor = validar_proveedor(product.proveedor_id)
 
-    new_product = Product(**product.dict())
-    db.add(new_product)
-    db.commit()
-    db.refresh(new_product)
+    db_product = Product(
+        nombreProducto=product.nombreProducto,
+        descripcion=product.descripcion,
+        marca=product.marca,
+        precio=product.precio,
+        proveedor_id=product.proveedor_id,  # 🔥 Sigue almacenando el ID
+        proveedor_nombre=nombre_proveedor  # ✅ Nuevo campo con el nombre del proveedor
+    )
     
-    return {"message": "Producto creado exitosamente", "product": new_product}
+    db.add(db_product)
+    db.commit()
+    db.refresh(db_product)
+    
+    return db_product
