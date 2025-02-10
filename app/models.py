@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from app.database import Base
 
 class Product(Base):
-    __tablename__ = "Products"
+    __tablename__ = "products"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nombreProducto = Column(String(255), nullable=False)
