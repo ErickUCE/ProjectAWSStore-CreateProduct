@@ -12,5 +12,4 @@ class Product(Base):
     precio = Column(DECIMAL(10, 2), nullable=False)
     proveedor_id = Column(Integer, nullable=False)  # Sigue almacenando el ID
     proveedor_nombre = Column(String(255), nullable=False)  # 🔥 Nuevo campo
-    created_at = Column(TIMESTAMP, server_default="CURRENT_TIMESTAMP")
-    updated_at = Column(TIMESTAMP, server_default="CURRENT_TIMESTAMP", onupdate="CURRENT_TIMESTAMP")
+    
