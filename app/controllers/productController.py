@@ -72,7 +72,8 @@ def sync_with_microservices(product):
 
     services = [
         os.getenv("READ_PRODUCT_SERVICE_URL", "http://localhost:8002") + "/sync-create",  # ReadProduct
-        os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://localhost:8003") + "/sync-create"  # UpdateProduct
+        os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://localhost:8003") + "/sync-create",  # UpdateProduct
+         os.getenv("DELETE_PRODUCT_SERVICE_URL", "http://localhost:8004") + "/sync-create"  # DELETEProduct
     ]
 
     product_data = {
@@ -95,5 +96,4 @@ def sync_with_microservices(product):
                 print(f"⚠️ Error sincronizando con {service}. Código: {response.status_code}")
         except requests.exceptions.RequestException as e:
             print(f"❌ Error enviando solicitud a {service}: {e}")
-
 
