@@ -17,10 +17,14 @@ jobs:
         username: ${{ secrets.AWS_EC2_USER }}
         key: ${{ secrets.AWS_EC2_KEY }}
         script: |
-          # Iniciar sesión en Docker Hub
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
+          # Asegurar permisos para Docker en EC2
+          sudo usermod -aG docker $USER
+          newgrp docker
           
-          # Detener y eliminar el contenedor anterior
+          # Iniciar sesión en Docker Hub
+          docker login -u "${{ secrets.DOCKERHUB_USER }}" -p "${{ secrets.DOCKERHUB_PASSWORD }}"
+          
+          # Detener y eliminar el contenedor anterior si existe
           docker stop create-product-container || true
           docker rm create-product-container || true
           
