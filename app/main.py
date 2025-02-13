@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware  # ✅ Importar CORSMiddlewar
 load_dotenv()  # 🔥 Esto carga las variables de `.env`
 
 # Verificar que se cargó correctamente
-print("📌 PROVIDER_SERVICE_URL:", os.getenv("PROVIDER_SERVICE_URL"))
+print("📌 xd PROVIDER_SERVICE_URL:", os.getenv("PROVIDER_SERVICE_URL"))
 
 app = FastAPI()
 
