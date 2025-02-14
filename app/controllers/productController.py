@@ -5,6 +5,8 @@ from app.utils import validar_proveedor
 from app.schemas import ProductCreate
 import os
 import requests
+from dotenv import load_dotenv
+import os
 
 # 🔹 URL del microservicio ReadProduct (debe estar en el .env)
 READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://44.195.73.5:8002")
