@@ -12,14 +12,14 @@ print("📌 xd PROVIDER_SERVICE_URL:", os.getenv("PROVIDER_SERVICE_URL"))
 
 app = FastAPI()
 
+# ✅ Configuración de CORS correcta para permitir el acceso desde el frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 🔥 Permitir todas las conexiones (solo para pruebas)
+    allow_origins=["*"],  # 🔥 Permitir todas las solicitudes (cámbialo luego a ["http://localhost:3000"])
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # ✅ Agregar "OPTIONS"
+    allow_headers=["*"],  # ✅ Permitir todos los encabezados
 )
-
 # Incluir las rutas
 app.include_router(router)
 
@@ -27,7 +27,3 @@ app.include_router(router)
 def home():
     return {"message": "API de Productos en FastAPI funcionando correctamente"}
 
-# 🔥 Endpoint explícito para manejar `OPTIONS` y evitar el error 405
-@app.options("/{full_path:path}")
-async def preflight(full_path: str):
-    return {"message": "Preflight request handled"}
