@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from app.routes import router
 from dotenv import load_dotenv
 import os
@@ -12,14 +12,24 @@ print("📌 xd PROVIDER_SERVICE_URL:", os.getenv("PROVIDER_SERVICE_URL"))
 
 app = FastAPI()
 
-# ✅ Configuración de CORS correcta para permitir el acceso desde el frontend
+# ✅ Configurar CORS correctamente
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 🔥 Permitir todas las solicitudes (cámbialo luego a ["http://localhost:3000"])
+    allow_origins=["*"],  # 🔥 Permitir solicitudes desde cualquier origen
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # ✅ Agregar "OPTIONS"
+    allow_methods=["*"],  # ✅ Permitir todos los métodos
     allow_headers=["*"],  # ✅ Permitir todos los encabezados
 )
+
+@app.options("/{full_path:path}")
+async def preflight_request(full_path: str, response: Response):
+    """
+    ✅ Endpoint para manejar OPTIONS y evitar el error 405
+    """
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
 # Incluir las rutas
 app.include_router(router)
 
