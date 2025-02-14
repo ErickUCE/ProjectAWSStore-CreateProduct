@@ -23,8 +23,11 @@ jobs:
           
           # Iniciar sesión en Docker Hub
           docker login -u "${{ secrets.DOCKERHUB_USER }}" -p "${{ secrets.DOCKERHUB_PASSWORD }}"
-          echo "PROVIDER_SERVICE_URL=http://3.229.198.244:5003" >> .env 
-          
+          echo "PROVIDER_SERVICE_URL=http://3.229.198.244:5003" >> .env
+          echo "UPDATE_PRODUCT_SERVICE_URL=http://54.165.250.5:8006" >> .env 
+          echo "DELETE_PRODUCT_SERVICE_URL=http://52.44.127.200:8005" >> .env 
+          echo "READ_PRODUCT_SERVICE_URL=http://44.195.73.5:8007" >> .env  
+
           # Detener y eliminar el contenedor anterior si existe
           docker stop create-product-container || true
           docker rm create-product-container || true
