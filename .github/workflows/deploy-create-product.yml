@@ -23,6 +23,7 @@ jobs:
           
           # Iniciar sesión en Docker Hub
           docker login -u "${{ secrets.DOCKERHUB_USER }}" -p "${{ secrets.DOCKERHUB_PASSWORD }}"
+          echo "PROVIDER_SERVICE_URL=http://3.229.198.244:5003" >> .env 
           
           # Detener y eliminar el contenedor anterior si existe
           docker stop create-product-container || true
