@@ -10,7 +10,9 @@ import os
 
 # 🔹 URL del microservicio ReadProduct (debe estar en el .env)
 READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://44.195.73.5:8002")
+UPDATE_PRODUCT_SERVICE_URL=os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://44.195.73.5:8002")
 
+DELETE_PRODUCT_SERVICE_URL=os.getenv("DELETE_PRODUCT_SERVICE_URL","http://52.44.127.200:8004") 
 
 def create_product(product: ProductCreate, db: Session):
     """Crea un nuevo producto y lo sincroniza con ReadProduct."""
