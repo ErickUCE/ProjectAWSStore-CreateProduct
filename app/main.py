@@ -26,3 +26,8 @@ app.include_router(router)
 @app.get("/")
 def home():
     return {"message": "API de Productos en FastAPI funcionando correctamente"}
+
+# 🔥 Endpoint explícito para manejar `OPTIONS` y evitar el error 405
+@app.options("/{full_path:path}")
+async def preflight(full_path: str):
+    return {"message": "Preflight request handled"}
