@@ -1,32 +1,22 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-import urllib.parse
-import os
-from dotenv import load_dotenv  # ✅ Cargar el .env
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.routes import router
 
-# 🔥 Cargar variables de entorno
-load_dotenv()
+app = FastAPI()
 
-DB_USER = os.getenv("DB_USER", "default_user")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "default_password")  # ✅ Evitar None
-DB_PASSWORD = urllib.parse.quote_plus(DB_PASSWORD)  # ✅ Codificar contraseña
+# 🔥 Permitir cualquier origen, credenciales, métodos y encabezados
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 🔥 Permitir todos los dominios (cámbialo en producción)
+    allow_credentials=True,
+    allow_methods=["*"],  # 🔥 Permitir todos los métodos
+    allow_headers=["*"],  # 🔥 Permitir todos los headers
+)
 
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
+# ✅ Asegurar que FastAPI tenga un endpoint de prueba
+@app.get("/")
+def home():
+    return {"message": "API de Productos en FastAPI funcionando correctamente"}
 
-# ✅ Construir la URL de conexión a MySQL
-DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-# 🔥 Crear motor de SQLAlchemy
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-# ✅ Función para obtener una sesión de base de datos
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# ✅ Incluir las rutas del backend
+app.include_router(router)
