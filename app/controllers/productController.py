@@ -7,7 +7,7 @@ import os
 import requests
 
 # 🔹 URL del microservicio ReadProduct (debe estar en el .env)
-READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://localhost:8002")
+READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://44.195.73.5:8002")
 
 
 def create_product(product: ProductCreate, db: Session):
@@ -71,9 +71,9 @@ def sync_with_microservices(product):
     print(f"🚀 Enviando producto a sincronización...")  # Verificación adicional
 
     services = [
-        os.getenv("READ_PRODUCT_SERVICE_URL", "http://localhost:8002") + "/sync-create",  # ReadProduct
-        os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://localhost:8003") + "/sync-create",  # UpdateProduct
-         os.getenv("DELETE_PRODUCT_SERVICE_URL", "http://localhost:8004") + "/sync-create"  # DELETEProduct
+        os.getenv("READ_PRODUCT_SERVICE_URL", "http://44.195.73.5:8002") + "/sync-create",  # ReadProduct
+        os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://54.165.250.5:8003") + "/sync-create",  # UpdateProduct
+         os.getenv("DELETE_PRODUCT_SERVICE_URL", "http://52.44.127.200:8004") + "/sync-create"  # DELETEProduct
     ]
 
     product_data = {
