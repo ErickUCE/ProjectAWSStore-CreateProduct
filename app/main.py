@@ -3,6 +3,10 @@ from app.routes import router
 from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware  # ✅ Importar CORSMiddleware
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 
 
 load_dotenv()  # 🔥 Esto carga las variables de `.env`
