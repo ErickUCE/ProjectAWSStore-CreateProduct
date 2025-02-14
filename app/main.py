@@ -67,6 +67,6 @@ app.include_router(router)
 def home():
     return {"message": "API de Productos en FastAPI funcionando correctamente"}
 
-# ✅ Iniciar el servidor solo si se ejecuta este script directamente
+# ✅ Iniciar el servidor solo si se ejecuta este script directamente hola
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
